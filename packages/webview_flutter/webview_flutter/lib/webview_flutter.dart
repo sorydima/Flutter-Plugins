@@ -286,10 +286,10 @@ class WebView extends StatefulWidget {
   final String? initialUrl;
 
   /// The initial baseURL to load.
-  final String baseUrl;
+  final String? baseUrl;
 
   /// The initial static html to load.
-  final String html;
+  final String? html;
 
   /// Whether Javascript execution is enabled.
   final JavascriptMode javascriptMode;
@@ -651,9 +651,9 @@ class WebViewController {
   ///
   /// `html` must not be null.
   ///
-  Future<void> loadHtml(String html) async {
+  Future<void> loadHtml(String? html) async {
     assert(html != null);
-    return _webViewPlatformController.loadHtml(html);
+    return _webViewPlatformController.loadHtml(html!);
   }
 
   /// Accessor to the current URL that the WebView is displaying.
