@@ -114,11 +114,14 @@
     // TODO(amirh): return an error if apply settings failed once it's possible to do so.
     // https://github.com/flutter/flutter/issues/36228
 
+    NSString* baseURLString = args[@"baseUrl"];
+    if ([baseURLString isKindOfClass:[NSString class]]) {
+      baseURL = [NSURL URLWithString:baseURLString];
+    }
+
     NSString* html = args[@"html"];
     if ([html isKindOfClass:[NSString class]]) {
-      NSString* baseURLString = args[@"baseUrl"];
       if ([baseURLString isKindOfClass:[NSString class]]) {
-        baseURL = [NSURL URLWithString:baseURLString];
         if (@available(iOS 9.0, *)) {
             [_webView loadFileURL:baseURL allowingReadAccessToURL:baseURL];
         } else {
