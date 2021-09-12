@@ -454,11 +454,11 @@ class CreationParams {
 
   /// The initial baseUrl to load in the webview. It will work with html only.
   ///
-  final String baseUrl;
+  final String? baseUrl;
 
   /// The initial html to load in the webview. This will be preferred over initialUrl if it exists.
   ///
-  final String html;
+  final String? html;
 
   /// The initial [WebSettings] for the new webview.
   ///
