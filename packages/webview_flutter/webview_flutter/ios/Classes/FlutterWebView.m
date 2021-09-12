@@ -114,13 +114,31 @@
     // TODO(amirh): return an error if apply settings failed once it's possible to do so.
     // https://github.com/flutter/flutter/issues/36228
 
-    NSString* initialUrl = args[@"initialUrl"];
-    if ([initialUrl isKindOfClass:[NSString class]]) {
-      [self loadUrl:initialUrl];
+    NSString* html = args[@"html"];
+    if ([html isKindOfClass:[NSString class]]) {
+      NSString* baseURLString = args[@"baseUrl"];
+      if ([baseURLString isKindOfClass:[NSString class]]) {
+        baseURL = [NSURL URLWithString:baseURLString];
+        if (@available(iOS 9.0, *)) {
+            [_webView loadFileURL:baseURL allowingReadAccessToURL:baseURL];
+        } else {
+            // Fallback on earlier versions
+        }
+        [_webView loadHTMLString:html baseURL:baseURL];
+      } else {
+        [_webView loadHTMLString:html baseURL:nil];
+      }
+    } else {
+      NSString* initialUrl = args[@"initialUrl"];
+      if ([initialUrl isKindOfClass:[NSString class]]) {
+        [self loadUrl:initialUrl];
+      }
     }
   }
   return self;
 }
+
+NSURL* baseURL = nil;
 
 - (void)dealloc {
   if (_progressionDelegate != nil) {
@@ -137,6 +155,8 @@
     [self onUpdateSettings:call result:result];
   } else if ([[call method] isEqualToString:@"loadUrl"]) {
     [self onLoadUrl:call result:result];
+  } else if ([[call method] isEqualToString:@"loadHtml"]) {
+    [self onLoadHtml:call result:result];
   } else if ([[call method] isEqualToString:@"canGoBack"]) {
     [self onCanGoBack:call result:result];
   } else if ([[call method] isEqualToString:@"canGoForward"]) {
@@ -190,6 +210,18 @@
   } else {
     result(nil);
   }
+}
+
+- (void)onLoadHtml:(FlutterMethodCall*)call result:(FlutterResult)result {
+  NSString* html = [call arguments][@"html"];
+  if ([html isKindOfClass:[NSString class]]) {
+    if (baseURL != nil) {
+      [_webView loadHTMLString:html baseURL:baseURL];
+    } else {
+      [_webView loadHTMLString:html baseURL:nil];
+    }
+  }
+  result(nil);
 }
 
 - (void)onCanGoBack:(FlutterMethodCall*)call result:(FlutterResult)result {
