@@ -1,4 +1,4 @@
-# Flutter plugins
+# Flutter Plugins
 
 [![Build Status](https://api.cirrus-ci.com/github/flutter/plugins.svg)](https://cirrus-ci.com/github/flutter/plugins/master)
 [![Release Status](https://github.com/flutter/plugins/actions/workflows/release.yml/badge.svg)](https://github.com/flutter/plugins/actions/workflows/release.yml)
@@ -9,10 +9,10 @@ Flutter first-party plugins (i.e., plugins developed by the core Flutter team).
 Check the `packages` directory for all plugins.
 
 Flutter plugins enable access to platform-specific APIs. For more information
-about plugins, and how to use them, see
+about plugins, and how to use them, see:
 [https://flutter.dev/platform-plugins/](https://flutter.dev/platform-plugins/).
 
-These plugins are also available on
+These plugins are also available on:
 [pub](https://pub.dev/flutter/packages).
 
 ## Issues
